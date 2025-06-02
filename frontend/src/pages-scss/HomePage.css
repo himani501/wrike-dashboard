@@ -1,0 +1,35 @@
+.Form-external {
+    position: fixed;
+    background-color: lightgray;
+    width: 100%;
+    height: 60%;
+    justify-content: center;
+    /* Horizontally center */
+    align-items: center;
+    /* Vertically center */
+    display: flex;
+}
+
+/* .Form-internal {
+    width: 900px;
+} */
+
+.StackClass {
+    width: 900px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn1 {
+    width: 50%;
+    height: 30px;
+}
+
+.btn2 {
+    width: 50%;
+    height: 30px;
+}
