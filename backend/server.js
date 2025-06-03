@@ -54,5 +54,20 @@ app.post(`/api/wrike/:taskID/comments`, async (req, res) => {
     }
 })
 
+app.get(`/api/wrike/:taskID/comments`, async (req, res) => {
+    try {
+        const { taskID } = req.params;
+
+        const response = await axios.get(`${WRIKE_API_BASE}/tasks/${taskID}/comments`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        res.json({ success: true, data: response.data });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ success: false, message: 'Failed to get comment', error: err.message });
+    }
+})
+
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

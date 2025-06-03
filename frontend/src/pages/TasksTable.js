@@ -1,13 +1,17 @@
 import React from "react";
 import { Table, TableHead, TableRow, TableHeader, TableCell, TableBody, Button } from "@carbon/react";
 import '@carbon/styles/css/styles.css';
-import Comment from "./Comment";
+import AddCommentModal from "./AddCommentModal";
+import GetCommentsModal from "./GetCommentsModal";
 // import '../PagesStyles/TasksTable.css';
 import { useState } from "react";
+import api from "../Api";
 
 const TasksTable = ({ data }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(null);
+    const [showComments, setShowComment] = useState(false);
+    const [commentsData, setCommentData] = useState([]);
 
     const addComment = (taskID) => {
         setSelectedTaskId(taskID);
@@ -19,6 +23,24 @@ const TasksTable = ({ data }) => {
         setSelectedTaskId(null);
     };
 
+    const getComments = async (taskID) => {
+        try {
+            setSelectedTaskId(taskID);
+            const response = await api.get(`/wrike/${taskID}/comments`);
+            if (response.data.success) {
+                setShowComment(true);
+                setCommentData(response.data.data);
+            }
+        } catch (err) {
+            alert('No comments exist!');
+        }
+    }
+
+    const closeGetModal = () => {
+        setShowComment(false);
+        setSelectedTaskId(null);
+    }
+
     return (
         <div>
             <h2>Tasks</h2>
@@ -29,7 +51,8 @@ const TasksTable = ({ data }) => {
                         <TableHeader>Account ID</TableHeader>
                         <TableHeader>Title</TableHeader>
                         <TableHeader>Status</TableHeader>
-                        <TableHeader>Comment</TableHeader>
+                        <TableHeader>Add Comment</TableHeader>
+                        <TableHeader>Get Comments</TableHeader>
                     </TableRow>
                 </TableHead>
                 <TableBody className="table-body">
@@ -43,13 +66,23 @@ const TasksTable = ({ data }) => {
                                 {/* Passing dynamic values as parameter to button function */}
                                 <Button onClick={() => addComment(task.id)}>Add a comment</Button>
                             </TableCell>
+                            <TableCell>
+                                {/* Passing dynamic values as parameter to button function */}
+                                <Button onClick={() => getComments(task.id)}>Get comments</Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             {showModal && (
                 <div>
-                    <Comment taskID={selectedTaskId} onClose={closeModal} />
+                    <AddCommentModal taskID={selectedTaskId} onClose={closeModal} />
+                </div>
+            )}
+
+            {showComments && (
+                <div>
+                    <GetCommentsModal data={commentsData} onClose={closeGetModal} />
                 </div>
             )}
         </div>

@@ -5,7 +5,7 @@ import '@carbon/styles/css/styles.css';
 import { TextInput } from "@carbon/react";
 import api from '../Api.js';
 
-const Comment = ({ taskID, onClose }) => {
+const AddCommentModal = ({ taskID, onClose }) => {
     const [textComment, setComment] = useState(null);
 
     const addComment = async (e) => {
@@ -70,4 +70,4 @@ const Comment = ({ taskID, onClose }) => {
     );
 };
 
-export default Comment;
+export default AddCommentModal;
