@@ -2,7 +2,7 @@
     position: fixed;
     background-color: lightgray;
     width: 100%;
-    height: 60%;
+    height: 100%;
     justify-content: center;
     /* Horizontally center */
     align-items: center;
@@ -15,8 +15,7 @@
 } */
 
 .StackClass {
-    width: 900px;
-    height: 100%;
+    width: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,10 +25,18 @@
 
 .btn1 {
     width: 50%;
-    height: 30px;
+    height: 30%;
 }
 
 .btn2 {
     width: 50%;
-    height: 30px;
+    height: 30%;
+}
+
+.table-scroll-container {
+    max-height: 400px;
+    overflow-y: auto;
+    /* to put scroller */
+    border: 1px solid #ccc;
+    margin-top: 1rem;
 }
