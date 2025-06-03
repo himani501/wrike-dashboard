@@ -1,9 +1,24 @@
 import React from "react";
 import { Table, TableHead, TableRow, TableHeader, TableCell, TableBody, Button } from "@carbon/react";
+import '@carbon/styles/css/styles.css';
+import Comment from "./Comment";
 // import '../PagesStyles/TasksTable.css';
-import '@carbon/styles/css/styles.css'
+import { useState } from "react";
 
 const TasksTable = ({ data }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
+
+    const addComment = (taskID) => {
+        setSelectedTaskId(taskID);
+        setShowModal(true);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedTaskId(null);
+    };
+
     return (
         <div>
             <h2>Tasks</h2>
@@ -25,12 +40,18 @@ const TasksTable = ({ data }) => {
                             <TableCell>{task.title}</TableCell>
                             <TableCell>{task.status}</TableCell>
                             <TableCell>
-                                <Button>Add a comment</Button>
+                                {/* Passing dynamic values as parameter to button function */}
+                                <Button onClick={() => addComment(task.id)}>Add a comment</Button>
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            {showModal && (
+                <div>
+                    <Comment taskID={selectedTaskId} onClose={closeModal} />
+                </div>
+            )}
         </div>
     );
 };
