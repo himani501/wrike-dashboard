@@ -44,8 +44,9 @@ const TasksTable = ({ data }) => {
     return (
         <div>
             <h2>Tasks</h2>
-            <Table className="table1">
-                <TableHead className="table-header-container">
+            <Table className="table1" style={{ display: 'block' }}>
+                <TableHead className="table-header-container"
+                    style={{ display: 'table', width: '80%', tableLayout: 'fixed' }}>
                     <TableRow className="header-row">
                         <TableHeader>ID</TableHeader>
                         <TableHeader>Account ID</TableHeader>
@@ -55,9 +56,11 @@ const TasksTable = ({ data }) => {
                         <TableHeader>Get Comments</TableHeader>
                     </TableRow>
                 </TableHead>
-                <TableBody className="table-body">
+                <TableBody className="table-body"
+                    style={{ display: 'block', maxHeight: '500px', overflowY: 'auto', width: '80%' }}>
                     {data.data && data.data.map((task) => (
-                        <TableRow key={task.id} className="table-row">
+                        <TableRow key={task.id} className="table-row"
+                            style={{ display: 'table', width: '80%', tableLayout: 'fixed' }}>
                             <TableCell>{task.id}</TableCell>
                             <TableCell>{task.accountId}</TableCell>
                             <TableCell>{task.title}</TableCell>

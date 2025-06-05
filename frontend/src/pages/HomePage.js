@@ -5,40 +5,37 @@ import TasksTable from './TasksTable.js';
 import '@carbon/styles/css/styles.css';
 
 const HomePage = () => {
-    const [isConnected, setConnect] = useState(false);
     const [showTable, setShowTable] = useState(false);
     const [data, setData] = useState([]);
 
     const handleConnect = async () => {
         try {
-            const res = await api.post('/connect');
+            const res = await api.get('/connect');
             if (res.data.success) {
-                setConnect(true);
                 alert('Yayy! Connected to Wrike !!!');
-            } else {
-                alert('Connection failed :(');
             }
         } catch (err) {
-            console.log(err);
-            alert('Error connecting to account');
+            if (err.response && err.response.data && err.response.data.message) {
+                alert(err.response.data.message);
+            } else {
+                alert('Something went wrong');
+            }
         }
     }
 
     const handleTasks = async () => {
-        if (isConnected) {
-            try {
-                const res = await api.get('/wrike/tasks');
-                if (res.data.success) {
-                    setData(res.data.data);
-                    setShowTable(true);
-                } else {
-                    alert('No tasks exist!', res.data.message);
-                }
-            } catch (err) {
-                alert('Error in fetching tasks.', err);
+        try {
+            const res = await api.get('/wrike/tasks');
+            if (res.data.success) {
+                setData(res.data.data);
+                setShowTable(true);
             }
-        } else {
-            alert('Oops!! Wrike account not connected');
+        } catch (err) {
+            if (err.response?.status === 401) {
+                alert(err.response.data?.message || 'Invalid or expired token.');
+            } else {
+                alert(err?.response?.data?.message || 'Get task failure.');
+            }
         }
     }
 
