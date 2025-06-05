@@ -8,21 +8,6 @@ const HomePage = () => {
     const [showTable, setShowTable] = useState(false);
     const [data, setData] = useState([]);
 
-    const handleConnect = async () => {
-        try {
-            const res = await api.get('/connect');
-            if (res.data.success) {
-                alert('Yayy! Connected to Wrike !!!');
-            }
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.message) {
-                alert(err.response.data.message);
-            } else {
-                alert('Something went wrong');
-            }
-        }
-    }
-
     const handleTasks = async () => {
         try {
             const res = await api.get('/wrike/tasks');
@@ -45,15 +30,12 @@ const HomePage = () => {
                 style={{ justifyContent: "center", alignItems: "center" }}>
                 <FormGroup
                     legendId="form-group-1"
-                    legendText="Wrike explorer"
+                    legendText=""
                     className="Form-internal"
                     style={{ justifyContent: "center", alignItems: "center" }}
                 >
                     <Stack gap={2} className="StackClass"
                         style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                        <Button className="btn1" onClick={handleConnect}>
-                            Connect to wrike
-                        </Button>
                         <Button className="btn2" onClick={handleTasks}>
                             Get Wrike Tasks
                         </Button>

@@ -1,6 +1,7 @@
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@carbon/react";
 import React from "react";
 import '@carbon/styles/css/styles.css';
+import '../PagesStyles/ModalStyles.css';
 
 const GetCommentsModal = ({ data, onClose }) => {
     return (
