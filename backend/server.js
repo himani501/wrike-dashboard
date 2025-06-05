@@ -12,6 +12,8 @@ app.use(express.json());
 const WRIKE_API_BASE = 'https://www.wrike.com/api/v4';
 const token = process.env.API_TOKEN;
 
+app.use(express.static("/Users/himanibhardwaj/himcodes/wrike-dashboard/frontend/build"));
+
 app.post('/api/connect', async (req, res) => {
     try {
         // Simulating actual API call
@@ -69,5 +71,5 @@ app.get(`/api/wrike/:taskID/comments`, async (req, res) => {
     }
 })
 
-const PORT = 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
